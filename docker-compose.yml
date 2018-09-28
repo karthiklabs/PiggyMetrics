@@ -2,6 +2,9 @@ version: '2.1'
 services:
   rabbitmq:
     image: rabbitmq:3-management
+    container_name: rabbitmq
+    networks:
+      - bridge
     restart: always
     ports:
       - 15672:15672
@@ -14,8 +17,13 @@ services:
   config:
     environment:
       CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
-    image: sqshq/piggymetrics-config
+    image: gkarthik/config:v2
+    container_name: config
+    networks:
+      - bridge
     restart: always
+    ports:
+      - 8888:8888
     logging:
       options:
         max-size: "10m"
@@ -24,7 +32,10 @@ services:
   registry:
     environment:
       CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
-    image: sqshq/piggymetrics-registry
+    image: gkarthik/registry:v1
+    container_name: registry
+    networks:
+      - bridge
     restart: always
     depends_on:
       config:
@@ -39,7 +50,10 @@ services:
   gateway:
     environment:
       CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
-    image: sqshq/piggymetrics-gateway
+    image: gkarthik/gateway:v1
+    container_name: gateway
+    networks:
+      - bridge
     restart: always
     depends_on:
       config:
@@ -58,7 +72,10 @@ services:
       STATISTICS_SERVICE_PASSWORD: $STATISTICS_SERVICE_PASSWORD
       ACCOUNT_SERVICE_PASSWORD: $ACCOUNT_SERVICE_PASSWORD
       MONGODB_PASSWORD: $MONGODB_PASSWORD
-    image: sqshq/piggymetrics-auth-service
+    image: gkarthik/auth-service:v1
+    container_name: auth-service
+    networks:
+      - bridge
     restart: always
     depends_on:
       config:
@@ -71,7 +88,10 @@ services:
   auth-mongodb:
     environment:
       MONGODB_PASSWORD: $MONGODB_PASSWORD
-    image: sqshq/piggymetrics-mongodb
+    image: gkarthik/mongodb:v1
+    container_name: auth-mongodb
+    networks:
+      - bridge
     restart: always
     logging:
       options:
@@ -83,7 +103,10 @@ services:
       CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
       ACCOUNT_SERVICE_PASSWORD: $ACCOUNT_SERVICE_PASSWORD
       MONGODB_PASSWORD: $MONGODB_PASSWORD
-    image: sqshq/piggymetrics-account-service
+    image: gkarthik/account-service:v1
+    container_name: account-service
+    networks:
+      - bridge
     restart: always
     depends_on:
       config:
@@ -97,7 +120,10 @@ services:
     environment:
       INIT_DUMP: account-service-dump.js
       MONGODB_PASSWORD: $MONGODB_PASSWORD
-    image: sqshq/piggymetrics-mongodb
+    image: gkarthik/mongodb:v1
+    container_name: account-mongodb
+    networks:
+      - bridge
     restart: always
     logging:
       options:
@@ -109,7 +135,10 @@ services:
       CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
       MONGODB_PASSWORD: $MONGODB_PASSWORD
       STATISTICS_SERVICE_PASSWORD: $STATISTICS_SERVICE_PASSWORD
-    image: sqshq/piggymetrics-statistics-service
+    image: gkarthik/statistics-service:v2
+    container_name: statistics-service
+    networks:
+      - bridge
     restart: always
     depends_on:
       config:
@@ -122,7 +151,10 @@ services:
   statistics-mongodb:
     environment:
       MONGODB_PASSWORD: $MONGODB_PASSWORD
-    image: sqshq/piggymetrics-mongodb
+    image: gkarthik/mongodb:v1
+    container_name: statistics-mongodb
+    networks:
+      - bridge
     restart: always
     logging:
       options:
@@ -134,7 +166,10 @@ services:
       CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
       MONGODB_PASSWORD: $MONGODB_PASSWORD
       NOTIFICATION_SERVICE_PASSWORD: $NOTIFICATION_SERVICE_PASSWORD
-    image: sqshq/piggymetrics-notification-service
+    image: gkarthik/notification-service:v2
+    container_name: notification-service
+    networks:
+      - bridge
     restart: always
     depends_on:
       config:
@@ -145,7 +180,10 @@ services:
         max-file: "10"
 
   notification-mongodb:
-    image: sqshq/piggymetrics-mongodb
+    image: gkarthik/mongodb:v1
+    container_name: notification-mongodb
+    networks:
+      - bridge
     restart: always
     environment:
       MONGODB_PASSWORD: $MONGODB_PASSWORD
@@ -157,7 +195,10 @@ services:
   monitoring:
     environment:
       CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
-    image: sqshq/piggymetrics-monitoring
+    image: gkarthik/monitoring:v1
+    container_name: monitoring
+    networks:
+      - bridge
     restart: always
     depends_on:
       config:
@@ -172,7 +213,10 @@ services:
   turbine-stream-service:
     environment:
       CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
-    image: sqshq/piggymetrics-turbine-stream-service
+    image: gkarthik/turbine-stream-service:v1
+    container_name: turbine-stream-service
+    networks:
+      - bridge
     restart: always
     depends_on:
       config:
@@ -185,6 +229,9 @@ services:
         max-file: "10"
   zipkin:
     image: openzipkin/zipkin
+    container_name: zipkin
+    networks:
+      - bridge
     restart: always
     ports:
       - 9411:9411
@@ -192,3 +239,5 @@ services:
       options:
         max-size: "10m"
         max-file: "10"
+  networks:
+     bridge:

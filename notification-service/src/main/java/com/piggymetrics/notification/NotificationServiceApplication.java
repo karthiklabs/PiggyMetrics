@@ -12,6 +12,8 @@ import org.springframework.data.mongodb.core.convert.CustomConversions;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableOAuth2Client;
+import org.springframework.cloud.netflix.hystrix.EnableHystrix;
+import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
 
 import java.util.Arrays;
 
@@ -19,6 +21,8 @@ import java.util.Arrays;
 @EnableDiscoveryClient
 @EnableOAuth2Client
 @EnableFeignClients
+@EnableCircuitBreaker
+@EnableHystrix
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @EnableScheduling
 public class NotificationServiceApplication {

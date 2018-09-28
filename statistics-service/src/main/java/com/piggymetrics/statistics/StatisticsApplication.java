@@ -16,12 +16,17 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableOAuth2Client;
 import org.springframework.security.oauth2.provider.token.ResourceServerTokenServices;
 
+import org.springframework.cloud.netflix.hystrix.EnableHystrix;
+import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
+
 import java.util.Arrays;
 
 @SpringBootApplication
 @EnableDiscoveryClient
 @EnableOAuth2Client
 @EnableFeignClients
+@EnableCircuitBreaker
+@EnableHystrix
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class StatisticsApplication {
 

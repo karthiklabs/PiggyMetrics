@@ -1,6 +1,6 @@
 logging:
-  level:
-    org.springframework.security: INFO
+  level: INFO
+    #org.springframework.security: INFO
 
 hystrix:
   command:
@@ -30,4 +30,4 @@ management:
   endpoints:
     web:
       exposure:
-        include: hystrix.stream
+        include: "*"

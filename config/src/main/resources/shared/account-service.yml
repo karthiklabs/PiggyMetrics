@@ -21,6 +21,6 @@ server:
     context-path: /accounts
   port: 6000
 
-feign:
-  hystrix:
-    enabled: true
+#feign:
+ # hystrix:
+  #  enabled: true

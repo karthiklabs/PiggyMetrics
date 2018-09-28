@@ -21,9 +21,9 @@ server:
     context-path: /statistics
   port: 7000
 
-feign:
-  hystrix:
-    enabled: true
+#feign:
+ # hystrix:
+  #  enabled: true
     
 rates:
   url: https://api.exchangeratesapi.io

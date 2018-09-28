@@ -25,9 +25,9 @@ backup:
     subject: PiggyMetrics account backup
     attachment: backup.json
 
-feign:
-  hystrix:
-    enabled: true
+#feign:
+ # hystrix:
+  #  enabled: true
         
 spring:
   data:

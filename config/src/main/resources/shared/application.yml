@@ -25,10 +25,8 @@ security:
 spring:
   rabbitmq:
     host: rabbitmq
-
-spring:
   zipkin:
-    baseUrl: http://zipkin-server
+    baseUrl: http://zipkin-server:9411
     
 management:
   endpoints:

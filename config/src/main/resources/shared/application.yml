@@ -1,6 +1,6 @@
 logging:
-  level: INFO
-    #org.springframework.security: INFO
+  level:
+    org.springframework.security: INFO
 
 hystrix:
   command:
